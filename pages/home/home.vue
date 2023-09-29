@@ -28,16 +28,16 @@
 				<view class="floor-img-box">
 					 <!-- 左侧大图片的盒子 -->
 					 <navigator class="left-img-box" :url="item.product_list[0].url">
-						   <image :src="item.product_list[0].image_src" :style="{width: 
-				item.product_list[0].image_width + 'rpx'}" mode="widthFix"></image>
+						   <image :src="item.product_list[0].image_src"
+							:style="{width: item.product_list[0].image_width + 'rpx'}" mode="widthFix"></image>
 						 </navigator>
 					 <!-- 右侧 4 个小图片的盒子 -->
 					 <view class="right-img-box">
-						   <navigator class="right-img-item" v-show="i2 !== 0" v-for="(item2, i2) in item.product_list"
-							:key="i2" :url="item2.url">
-							     <image :src="item2.image_src" mode="widthFix" :style="{width: 
-				item2.image_width + 'rpx'}" v-if="i2 !== 0"></image>
-							   </navigator>
+						   <navigator class="right-img-item" v-for="(item2, i2) in item.product_list" :key="i2"
+							:url="item2.url" v-show="i2 != 0">
+							<image :src="item2.image_src" mode="widthFix" :style="{width: item2.image_width + 'rpx'}"
+								v-if="i2 !== 0"></image>
+						</navigator>
 						 </view>
 				</view>
 			</view>
@@ -62,64 +62,42 @@
 		},
 		methods: {
 			// 获取轮播图数据的方法
-			// async getSwiperList() {
-			// 	//  发起请求
-			// 	const {
-			// 		data: res
-			// 	} = await uni.$http.get('/api/public/v1/home/swiperdata')
-			// 	// 请求失败
-			// 	if (res.meta.status !== 200) {
-			// 		return uni.showToast({
-			// 			title: '数据请求失败！',
-			// 			duration: 1500,
-			// 			icon: 'none',
-			// 		})
-			// 	}
-			// 	// 请求成功，为 data 中的数据赋值
-			// 	this.swiperList = res.message
-			// },
 			async getSwiperList() {
 				const {
 					data: res
 				} = await uni.$http.get('/api/public/v1/home/swiperdata')
-				if (res.meta.status !== 200) return uni.$showMsg()
-				this.swiperList = res.message
+				if (res.meta.status !== 200) return uni.$showMsg() // 请求失败
+				this.swiperList = res.message // 请求成功，为 data 中的数据赋值
 			},
 			async getNavList() {
 				const {
 					data: res
 				} = await uni.$http.get('/api/public/v1/home/catitems')
-				if (res.meta.status !== 200) return uni.$showMsg()
+				if (res.meta.status !== 200) {
+					return uni.$showMsg()
+				}
 				this.navList = res.message
 			},
-			// async getFloorList() { // 定义获取楼层列表数据的方法
-			// 	const {
-			// 		data: res
-			// 	} = await uni.$http.get('/api/public/v1/home/floordata')
-			// 	if (res.meta.status !== 200) return uni.$showMsg()
-			// 	this.floorList = res.message
-			// },
 			// 获取楼层列表数据
 			async getFloorList() {
 				const {
 					data: res
 				} = await uni.$http.get('/api/public/v1/home/floordata')
-				if (res.meta.status !== 200) return uni.$showMsg()
+				if (res.meta.status !== 200) {
+					return uni.$showMsg()
+				}
 
 				// 通过双层 forEach 循环，处理 URL 地址
 				res.message.forEach(floor => {
 					floor.product_list.forEach(prod => {
-						prod.url = '/subpkg/goods_list/goods_list?' +
-							prod.navigator_url.split('?')[1]
+						prod.url = '/subpkg/goods_list/goods_list?' + prod.navigator_url.split('?')[1];
 					})
 				})
-
-				this.floorList = res.message
-			}
-			// nav-item 项被点击时候的事件处理函数
-			navClickHandler(item) {
+				this.floorList = res.message;
+			},
+			navClickHandler(item) { // nav-item 项被点击时候的事件处理函数
 				// 判断点击的是哪个 nav
-				if (item.name === '分类') {
+				if (item.name == '分类') {
 					uni.switchTab({
 						url: '/pages/cate/cate'
 					})
@@ -132,7 +110,6 @@
 <style lang="scss">
 	swiper {
 		height: 330rpx;
-
 
 		.swiper-item,
 		image {
