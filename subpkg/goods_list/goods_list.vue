@@ -1,6 +1,6 @@
 <template>
 	<view class="goods-list">
-		<block v-for="(item, i) in goodsList" :key="i" @click="gotoDetail(item)">
+		<block v-for="(item, i) in goodsList" :key="i" @click="this.gotoDetail(item)">
 			<!-- 为 my-goods 组件动态绑定 goods 属性的值 -->
 			<my-goods :goods="item"></my-goods>
 		</block>
