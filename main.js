@@ -1,16 +1,25 @@
 // #ifndef VUE3
-import Vue from 'vue'
-import App from './App'
-
+import {
+	Vue
+} from 'vue'
+import {
+	App
+} from './App'
+import {
+	store
+} from './store/index.js'
 Vue.config.productionTip = false
-
 App.mpType = 'app'
-
 const app = new Vue({
-	...App
+	// 将 store 挂载到 Vue 实例上
+	store,
+	...App,
 })
+app.use(store)
 app.$mount()
 // #endif
+
+
 import {
 	$http
 } from '@escook/request-miniprogram'
@@ -43,10 +52,13 @@ import {
 	createSSRApp
 } from 'vue'
 import App from './App.vue'
+import store from './store/index'
 export function createApp() {
 	const app = createSSRApp(App)
+	app.use(store)
 	return {
-		app
+		// store,
+		app,
 	}
 }
 // #endif
