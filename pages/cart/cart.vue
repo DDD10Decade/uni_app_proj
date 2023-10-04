@@ -22,7 +22,6 @@
 		<!-- 结算区域 -->
 		<my-settle></my-settle>
 	</view>
-
 	<!-- 空白购物车区域 -->
 	<view class="empty-cart" v-else>
 		<image src="https://img3.doubanio.com/f/movie/8dd0c794499fe925ae2ae89ee30cd225750457b4/pics/movie/celebrity-default-medium.pngss" class="empty-img"></image>
