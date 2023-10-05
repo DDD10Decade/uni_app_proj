@@ -10,7 +10,9 @@ import {
 } from './store/index.js'
 Vue.config.productionTip = false
 App.mpType = 'app'
+require('./mock/Mock.js'); // 注意文件路径名称
 const app = new Vue({
+	Element,
 	// 将 store 挂载到 Vue 实例上
 	store,
 	...App,
@@ -18,7 +20,6 @@ const app = new Vue({
 app.use(store)
 app.$mount()
 // #endif
-
 
 import {
 	$http
@@ -55,12 +56,15 @@ uni.$showMsg = function(title = '数据加载失败！', duration = 1500) {
 		icon: 'none',
 	})
 }
+
+
 // #ifdef VUE3
 import {
 	createSSRApp
 } from 'vue'
 import App from './App.vue'
 import store from './store/index'
+
 export function createApp() {
 	const app = createSSRApp(App)
 	app.use(store)
